@@ -11,6 +11,8 @@ module.exports = {
         MainDark: "#121212",
         DimeGray: "#5f5f5f",
         DarkGray: "#2f2f2f",
+        MidnightGray: "#252525",
+        CharcoalGray: "#2e2e2e",
         Crimson: "#ff3b5c",
         LightGrey: "#e8e8e8",
       },

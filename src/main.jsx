@@ -7,13 +7,16 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/index.scss";
+import { AuthProvider } from "./context/auth-context";
 /* ====================================================== */
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
-      <ToastContainer />
+      <AuthProvider>
+        <App />
+        <ToastContainer />
+      </AuthProvider>
     </Provider>
   </BrowserRouter>
 );

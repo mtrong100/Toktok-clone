@@ -21,6 +21,24 @@ export const SidebarLinks = [
   {
     name: "Live",
     icon: <AiFillVideoCamera />,
-    path: "/",
+    path: "/live",
   },
 ];
+
+export const TiktokLinks = [
+  "About",
+  "Contact",
+  "Careers",
+  "Advertise",
+  "Embeds",
+  "Terms & Privacy",
+  "Community & Guidelines",
+  "Creator",
+];
+
+export const ToastConfig = {
+  position: "top-center",
+  theme: "dark",
+  autoClose: 2000,
+  pauseOnHover: false,
+};
