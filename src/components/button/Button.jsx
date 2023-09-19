@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { twMerge } from "tailwind-merge";
 /* ====================================================== */
 
-const defaultStyles = "px-4 font-medium cursor-pointer h-[36px] rounded-sm";
 const variantClasses = {
   solid: "bg-Crimson hover:bg-opacity-80",
   bordered: "border border-Crimson hover:bg-white hover:bg-opacity-10",
@@ -26,7 +25,7 @@ const Button = ({
         "px-4 font-medium cursor-pointer h-[36px] rounded-sm",
         variantClasses[variant],
         className,
-        isLoading ? "bg-opacity-50 cursor-not-allowed" : ""
+        isLoading ? "opacity-50 cursor-not-allowed" : ""
       )}
     >
       {children}

@@ -8,6 +8,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase-app";
 import { useSelector } from "react-redux";
 import DefaultAvatar from "/user.png";
+import UserAvatar from "../../modules/user/UserAvatar";
 /* ====================================================== */
 
 const MenuDropdown = () => {
@@ -30,13 +31,7 @@ const MenuDropdown = () => {
   return (
     <Menu as="div">
       <Menu.Button>
-        <div className="w-[40px] h-[40px] cursor-pointer relative">
-          <img
-            src={currentUser?.photoURL || DefaultAvatar}
-            alt="user-avatar"
-            className="rounded-full img-cover"
-          />
-        </div>
+        <UserAvatar size="lg" avatar={currentUser?.photoURL} />
       </Menu.Button>
       <Transition
         as={Fragment}

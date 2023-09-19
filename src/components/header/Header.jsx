@@ -18,10 +18,10 @@ const Header = () => {
   return (
     <React.Fragment>
       <header className="fixed top-0 z-50 grid items-center w-full grid-cols-3 px-8 py-2 border-b bg-MainDark border-DarkGray">
-        <div className="w-[42px] h-[42px] flex items-center gap-2">
+        <Link to="/" className="w-[42px] h-[42px] flex items-center gap-2">
           <img src="/logo.png" className="img-cover" alt="tiktok-logo" />
           <h1 className="text-2xl font-semibold">Tiktok</h1>
-        </div>
+        </Link>
 
         <div className="flex items-center justify-between w-full py-3 px-4 max-w-[500px] bg-DarkGray gap-1 border border-transparent rounded-full group hover:border-DimeGray">
           <input

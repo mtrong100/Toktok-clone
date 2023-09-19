@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { ToastConfig, UploadSidebar } from "../constants/constants";
 import { PostValidation } from "../utils/validation-schema";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { HiMusicalNote } from "react-icons/hi2";
 import { HiHashtag } from "react-icons/hi";
 import { FcUpload } from "react-icons/fc";
@@ -22,6 +22,7 @@ import {
 } from "firebase/firestore";
 import slugify from "slugify";
 import { toast } from "react-toastify";
+import UserAvatar from "../modules/user/UserAvatar";
 /* ====================================================== */
 
 const UploadPage = () => {
@@ -42,7 +43,8 @@ const UploadPage = () => {
   const { video, setVideo, progress, selectFile } = useUploadVideo();
   const [selected, setSelected] = useState("Public");
 
-  const uploadVideo = async (values) => {
+  /* Add new post */
+  const handleAddPost = async (values) => {
     if (!isValid || !video) return;
 
     try {
@@ -72,49 +74,8 @@ const UploadPage = () => {
 
   return (
     <React.Fragment>
-      <header className="h-[60px] bg-MainDark fixed top-0 w-full px-5 border-b justify-between border-CharcoalGray z-50 flex items-center">
-        <section className="flex items-center gap-3">
-          <div className="w-[42px] h-[42px] flex items-center gap-2">
-            <img src="/logo.png" className="img-cover" alt="tiktok-logo" />
-            <h1 className="text-2xl font-semibold text-white">Tiktok</h1>
-          </div>
-          <div className="flex items-center gap-3 ml-20">
-            <span className="px-[9px] py-1 bg-black text-white font-semibold rounded-sm">
-              Creator Center
-            </span>
-            <span className="px-3 py-1 font-semibold text-white rounded-sm bg-Crimson">
-              Beta
-            </span>
-          </div>
-        </section>
-
-        <div className="w-[35px] h-[35px]">
-          <img
-            src={currentUser?.photoURL}
-            className="rounded-full img-cover"
-            alt="user-avatar"
-          />
-        </div>
-      </header>
-
-      <section className="w-[240px] fixed left-0 top-[60px] h-screen p-3 border-r border-CharcoalGray">
-        <ul className="flex flex-col">
-          {UploadSidebar.map((item) => (
-            <NavLink
-              to={item.path}
-              className={({ isActive }) =>
-                `${
-                  isActive ? "text-Crimson" : "text-LightGrey"
-                }  flex px-5 items-center cursor-pointer font-semibold hover:bg-CharcoalGray transition-all rounded-sm gap-4 h-[48px] text-lg`
-              }
-              key={item.name}
-            >
-              <span className="text-2xl">{item.icon}</span>
-              <p>{item.name}</p>
-            </NavLink>
-          ))}
-        </ul>
-      </section>
+      <Header photoURL={currentUser?.photoURL} />
+      <Sidebar />
 
       <main className="relative flex flex-col ml-[240px] mt-[60px]">
         <section className="w-full max-w-5xl p-5 mx-auto mt-10 rounded-md shadow-xl bg-CharcoalGray">
@@ -175,7 +136,7 @@ const UploadPage = () => {
             )}
 
             <form
-              onSubmit={handleSubmit(uploadVideo)}
+              onSubmit={handleSubmit(handleAddPost)}
               className="flex flex-col flex-1 w-full gap-5"
             >
               <Input
@@ -213,7 +174,8 @@ const UploadPage = () => {
               <section className="flex items-center gap-5 mt-5">
                 <Button
                   variant="bordered"
-                  className="h-[49px] w-[164px] border-DimeGray hover:bg-MainDark hover:bg-opacity-100"
+                  isLoading={isSubmitting}
+                  className="h-[49px] w-[164px]  border-DimeGray hover:bg-MainDark hover:bg-opacity-100"
                 >
                   Discard
                 </Button>
@@ -221,7 +183,7 @@ const UploadPage = () => {
                   isLoading={isSubmitting}
                   type="submit"
                   variant="solid"
-                  className="h-[48px] w-[164px]"
+                  className="h-[48px] w-[164px] "
                 >
                   Post
                 </Button>
@@ -235,3 +197,48 @@ const UploadPage = () => {
 };
 
 export default UploadPage;
+
+function Header({ photoURL }) {
+  return (
+    <header className="h-[60px] bg-MainDark fixed top-0 w-full px-5 border-b justify-between border-CharcoalGray z-50 flex items-center">
+      <section className="flex items-center gap-3">
+        <Link to="/" className="w-[42px] h-[42px] flex items-center gap-2">
+          <img src="/logo.png" className="img-cover" alt="tiktok-logo" />
+          <h1 className="text-2xl font-semibold text-white">Tiktok</h1>
+        </Link>
+        <div className="flex items-center gap-3 ml-20">
+          <span className="px-[9px] py-1 bg-black text-white font-semibold rounded-sm">
+            Creator Center
+          </span>
+          <span className="px-3 py-1 font-semibold text-white rounded-sm bg-Crimson">
+            Beta
+          </span>
+        </div>
+      </section>
+      <UserAvatar size="md" avatar={photoURL} />
+    </header>
+  );
+}
+
+function Sidebar() {
+  return (
+    <section className="w-[240px] fixed left-0 top-[60px] h-screen p-3 border-r border-CharcoalGray">
+      <ul className="flex flex-col">
+        {UploadSidebar.map((item) => (
+          <NavLink
+            to={item.path}
+            className={({ isActive }) =>
+              `${
+                isActive ? "text-Crimson" : "text-LightGrey"
+              }  flex px-5 items-center cursor-pointer font-semibold hover:bg-CharcoalGray transition-all rounded-sm gap-4 h-[48px] text-lg`
+            }
+            key={item.name}
+          >
+            <span className="text-2xl">{item.icon}</span>
+            <p>{item.name}</p>
+          </NavLink>
+        ))}
+      </ul>
+    </section>
+  );
+}

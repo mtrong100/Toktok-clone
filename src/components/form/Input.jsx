@@ -18,7 +18,7 @@ const Input = ({
           type={type}
           placeholder={placeholder}
           className={twMerge(
-            "w-full p-3 border rounded-sm border-DimeGray focus:bg-MidnightGray focus:border-LightGrey",
+            "w-full p-3 border rounded-md border-DimeGray focus:bg-MidnightGray focus:border-LightGrey",
             className
           )}
         />
