@@ -1,6 +1,6 @@
 import useUploadVideo from "../hooks/useUploadVideo";
 import React, { useState } from "react";
-import Input from "../components/form/input";
+import Input from "../components/form/Input";
 import Dropdown from "../components/form/Dropdown";
 import Button from "../components/button/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
