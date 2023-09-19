@@ -18,7 +18,7 @@ module.exports = {
       },
       backgroundImage: {
         /* GRADIENT-COLOR */
-        primaryGradient: "linear-gradient(to right , #e66e00, #f91880)",
+        primaryGradient: "linear-gradient(to right , #121212, #252525)",
         secondaryGradient: "linear-gradient(to right , #7856ff, #1d9bf0)",
       },
     },

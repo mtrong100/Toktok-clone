@@ -8,11 +8,11 @@ import { IoMdNotifications } from "react-icons/io";
 import { BiMessageAltMinus, BiSearch } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 import MenuDropdown from "../menu/MenuDropdown";
+/* ====================================================== */
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser);
-
   const { toggle: showModal, handleToggle } = useToggleValue();
 
   return (
@@ -35,15 +35,28 @@ const Header = () => {
         </div>
 
         <div className="flex items-center justify-end gap-5">
-          <Link className="flex items-center justify-center gap-1 px-4 h-[36px] font-semibold border border-transparent rounded-sm bg-DarkGray hover:border-DimeGray">
-            <span>
-              <AiOutlinePlus />
-            </span>
-            Upload
-          </Link>
+          {currentUser && (
+            <Link
+              to={`/upload`}
+              className="flex items-center justify-center gap-1 px-4 h-[36px] font-semibold border border-transparent rounded-sm bg-DarkGray hover:border-DimeGray"
+            >
+              <span>
+                <AiOutlinePlus />
+              </span>
+              Upload
+            </Link>
+          )}
 
           {currentUser ? (
-            <MenuDropdown />
+            <div className="flex items-center gap-4">
+              <span className="text-2xl cursor-pointer">
+                <IoMdNotifications />
+              </span>
+              <span className="text-2xl cursor-pointer">
+                <BiMessageAltMinus />
+              </span>
+              <MenuDropdown />
+            </div>
           ) : (
             <Button onClick={handleToggle} variant="solid">
               Join now

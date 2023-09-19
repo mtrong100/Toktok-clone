@@ -1,21 +1,17 @@
 import React from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { AiOutlineSetting } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
-import { BsSun } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
 import { MdOutlineContactSupport } from "react-icons/md";
 import { Fragment } from "react";
-import { AiOutlineBars } from "react-icons/ai";
-// import { useTheme } from "../../context/theme-context";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase-app";
 import { useSelector } from "react-redux";
 import DefaultAvatar from "/user.png";
+/* ====================================================== */
 
 const MenuDropdown = () => {
   const { currentUser } = useSelector((state) => state.user);
-  //   const { darkMode, toggleDarkMode } = useTheme();
 
   const handleSignout = () => {
     signOut(auth);
@@ -24,11 +20,6 @@ const MenuDropdown = () => {
 
   const links = [
     { label: "Settings", icon: <AiOutlineSetting /> },
-    // {
-    //   label: "Theme",
-    //   icon: darkMode ? <FaMoon /> : <BsSun />,
-    //   onClick: toggleDarkMode,
-    // },
     {
       label: "Support",
       icon: <MdOutlineContactSupport />,

@@ -2,9 +2,7 @@ import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 /* ====================================================== */
 const HomePage = lazy(() => import("./pages/HomePage"));
-const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
-const LoginPage = lazy(() => import("./pages/LoginPage"));
-const RegisterPgae = lazy(() => import("./pages/RegisterPgae"));
+const UploadPage = lazy(() => import("./pages/UploadPage"));
 
 function App() {
   return (
@@ -12,15 +10,13 @@ function App() {
       <Suspense
         fallback={
           <div className="flex items-center justify-center h-screen">
-            <span className="loadingSpin"></span>
+            {/* <span className="loadingSpin"></span> */}
           </div>
         }
       >
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/sign-in" element={<LoginPage />} />
-          <Route path="/sign-up" element={<RegisterPgae />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/upload" element={<UploadPage />} />
         </Routes>
       </Suspense>
     </>

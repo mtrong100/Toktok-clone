@@ -45,6 +45,7 @@ export default function Modal({ isOpen, onClose }) {
           createdAt: serverTimestamp(),
         });
       }
+
       toast.success("Welcome to tiktok!", ToastConfig);
       onClose();
       window.location.reload();

@@ -1,4 +1,8 @@
-import { AiFillHome, AiFillVideoCamera } from "react-icons/ai";
+import {
+  AiFillHome,
+  AiFillVideoCamera,
+  AiOutlineUnorderedList,
+} from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { MdExplore } from "react-icons/md";
 
@@ -42,3 +46,18 @@ export const ToastConfig = {
   autoClose: 2000,
   pauseOnHover: false,
 };
+
+export const UploadSidebar = [
+  {
+    name: "Home",
+    path: "/",
+    icon: <AiFillHome />,
+  },
+  {
+    name: "Posts",
+    path: "/post",
+    icon: <AiOutlineUnorderedList />,
+  },
+];
+
+export const WatchOptions = ["Public", "Friends", "Private"];
