@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/header/Header";
 import Sidebar from "../components/shared/Sidebar";
 import { useSelector } from "react-redux";
@@ -9,8 +9,13 @@ import { v4 } from "uuid";
 
 const HomePage = () => {
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  // console.log(currentUser);
   const { data: posts, isLoading } = useFetchCollection("posts");
+
+  // FIX SCROLL BUG
+  useEffect(() => {
+    document.body.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   return (
     <React.Fragment>

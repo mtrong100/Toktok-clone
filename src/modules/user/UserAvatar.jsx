@@ -3,6 +3,7 @@ import DefaultAvatar from "/user.png";
 import { twMerge } from "tailwind-merge";
 
 const sizeClasses = {
+  xxl: "w-[116px] h-[116px]",
   xl: "w-[53px] h-[53px]",
   lg: "w-[40px] h-[40px]",
   md: "w-[35px] h-[35px]",

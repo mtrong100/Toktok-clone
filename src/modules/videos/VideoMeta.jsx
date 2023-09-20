@@ -1,12 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const VideoMeta = ({ username, date, hashtag, title, music }) => {
+const VideoMeta = ({ username, date, hashtag, title, music, slug }) => {
   return (
     <section>
       <div className="flex items-center gap-2">
-        <h4 className="font-semibold cursor-pointer hover:underline">
+        <Link
+          to={`/${slug}`}
+          className="font-semibold cursor-pointer hover:underline"
+        >
           {username}
-        </h4>
+        </Link>
         <span>.</span>
         <span className="text-xs md:text-sm">{date}</span>
       </div>

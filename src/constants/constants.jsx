@@ -5,6 +5,7 @@ import {
 } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { MdExplore } from "react-icons/md";
+import { BiSolidLockAlt } from "react-icons/bi";
 
 export const SidebarLinks = [
   {

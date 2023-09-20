@@ -2,16 +2,18 @@ import VideoMeta from "./VideoMeta";
 import VideoIcon from "./VideoIcon";
 import UserAvatar from "../user/UserAvatar";
 import useQuerySnapshot from "../../hooks/useQuerySnapshot";
+import Skeleton from "../../components/loading/Skeleton";
 import React from "react";
 import { IoIosShareAlt } from "react-icons/io";
 import { formatDateTime } from "../../utils/reuse-function";
 import { FaCommentDots } from "react-icons/fa";
 import { BsFillBookmarkFill } from "react-icons/bs";
-import { AiFillHeart } from "react-icons/ai";
-import Skeleton from "../../components/loading/Skeleton";
+import { useSelector } from "react-redux";
+import PostLike from "../post/PostLike";
 /* ====================================================== */
 
 const VideoItem = ({ data }) => {
+  const { currentUser } = useSelector((state) => state.user);
   const { data: user } = useQuerySnapshot("users", "userId", data?.userId);
   const date = formatDateTime(data?.createdAt);
 
@@ -22,6 +24,7 @@ const VideoItem = ({ data }) => {
           <UserAvatar size="xl" avatar={user?.photoURL} />
           <VideoMeta
             username={user?.username}
+            slug={user?.slug}
             date={date}
             title={data?.title}
             hashtag={data?.hashtag}
@@ -44,9 +47,7 @@ const VideoItem = ({ data }) => {
           className="max-h-[600px] rounded-md"
         />
         <section className="flex flex-col gap-3">
-          <VideoIcon amount={"284.4K"}>
-            <AiFillHeart size={25} />
-          </VideoIcon>
+          <PostLike data={data} />
           <VideoIcon amount={"1383"}>
             <FaCommentDots size={22} />
           </VideoIcon>

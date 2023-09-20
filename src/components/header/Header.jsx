@@ -12,7 +12,6 @@ import MenuDropdown from "../menu/MenuDropdown";
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
   const { toggle: showModal, handleToggle } = useToggleValue();
 
   return (

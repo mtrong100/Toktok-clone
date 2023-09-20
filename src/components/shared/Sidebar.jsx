@@ -1,8 +1,10 @@
+import UserItem from "../../modules/user/UserItem";
 import React from "react";
+import { v4 } from "uuid";
+import { useSelector } from "react-redux";
 import { SidebarLinks } from "../../constants/constants";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import UserAvatar from "../../modules/user/UserAvatar";
+/* ====================================================== */
 
 const Sidebar = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -25,10 +27,8 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </ul>
-
       <div className="mb-3 h-[1px] w-full bg-CharcoalGray"></div>
-
-      <div>
+      <section>
         <h4 className="px-5 text-sm font-medium opacity-80">
           Following accounts
         </h4>
@@ -36,24 +36,10 @@ const Sidebar = () => {
           {Array(7)
             .fill(0)
             .map((item, index) => (
-              <li
-                key={index}
-                className="h-[48px] px-5  flex items-center cursor-pointer font-semibold hover:bg-CharcoalGray transition-all rounded-sm gap-3 text-lg"
-              >
-                <UserAvatar
-                  size="base"
-                  avatar={"https://source.unsplash.com/random"}
-                />
-                <div>
-                  <h3 className="text-sm font-semibold">
-                    {currentUser?.username}
-                  </h3>
-                  <p className="text-xs opacity-80">{currentUser?.slug}</p>
-                </div>
-              </li>
+              <UserItem key={v4()} />
             ))}
         </ul>
-      </div>
+      </section>
     </section>
   );
 };
