@@ -1,19 +1,17 @@
-import VideoMeta from "./VideoMeta";
-import VideoIcon from "./VideoIcon";
+import VideoIcon from "../videos/VideoIcon";
 import UserAvatar from "../user/UserAvatar";
 import useQuerySnapshot from "../../hooks/useQuerySnapshot";
 import Skeleton from "../../components/loading/Skeleton";
 import React from "react";
+import PostSave from "./PostSave";
+import PostMeta from "./PostMeta";
+import PostLike from "./PostLike";
 import { IoIosShareAlt } from "react-icons/io";
 import { formatDateTime } from "../../utils/reuse-function";
 import { FaCommentDots } from "react-icons/fa";
-import { BsFillBookmarkFill } from "react-icons/bs";
-import { useSelector } from "react-redux";
-import PostLike from "../post/PostLike";
 /* ====================================================== */
 
-const VideoItem = ({ data }) => {
-  const { currentUser } = useSelector((state) => state.user);
+const PostItem = ({ data }) => {
   const { data: user } = useQuerySnapshot("users", "userId", data?.userId);
   const date = formatDateTime(data?.createdAt);
 
@@ -22,7 +20,7 @@ const VideoItem = ({ data }) => {
       <div className="flex items-center justify-between">
         <div className="flex items-start gap-3">
           <UserAvatar size="xl" avatar={user?.photoURL} />
-          <VideoMeta
+          <PostMeta
             username={user?.username}
             slug={user?.slug}
             date={date}
@@ -51,9 +49,7 @@ const VideoItem = ({ data }) => {
           <VideoIcon amount={"1383"}>
             <FaCommentDots size={22} />
           </VideoIcon>
-          <VideoIcon amount={"94"}>
-            <BsFillBookmarkFill size={20} />
-          </VideoIcon>
+          <PostSave data={data} />
           <VideoIcon amount={"9457"}>
             <IoIosShareAlt size={24} />
           </VideoIcon>
@@ -63,9 +59,9 @@ const VideoItem = ({ data }) => {
   );
 };
 
-export default VideoItem;
+export default PostItem;
 
-export const VideoItemSkeleton = () => {
+export const PostItemItemSkeleton = () => {
   return (
     <article className="flex flex-col gap-2">
       <div className="flex items-center justify-between">

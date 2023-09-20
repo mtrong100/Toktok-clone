@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const VideoMeta = ({ username, date, hashtag, title, music, slug }) => {
+const PostMeta = ({ username, date, hashtag, title, music, slug }) => {
   return (
     <section>
       <div className="flex items-center gap-2">
@@ -29,4 +29,4 @@ const VideoMeta = ({ username, date, hashtag, title, music, slug }) => {
   );
 };
 
-export default VideoMeta;
+export default PostMeta;

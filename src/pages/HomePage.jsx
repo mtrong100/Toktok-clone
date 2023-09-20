@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
-import Header from "../components/header/Header";
-import Sidebar from "../components/shared/Sidebar";
-import { useSelector } from "react-redux";
 import useFetchCollection from "../hooks/useFetchCollection";
-import VideoItem, { VideoItemSkeleton } from "../modules/videos/VideoItem";
+import React, { useEffect } from "react";
+import PostItem, { PostItemItemSkeleton } from "../modules/post/PostItem";
 import { v4 } from "uuid";
+import { useSelector } from "react-redux";
 /* ====================================================== */
 
 const HomePage = () => {
@@ -22,11 +20,11 @@ const HomePage = () => {
       {isLoading &&
         Array(4)
           .fill(0)
-          .map((item, index) => <VideoItemSkeleton key={index} />)}
+          .map(() => <PostItemItemSkeleton key={v4()} />)}
 
       {!isLoading &&
         posts.length > 0 &&
-        posts.map((item) => <VideoItem key={v4()} data={item} />)}
+        posts.map((item) => <PostItem key={v4()} data={item} />)}
     </React.Fragment>
   );
 };

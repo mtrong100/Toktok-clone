@@ -16,6 +16,7 @@ module.exports = {
         Crimson: "#ff3b5c",
         LightGrey: "#e8e8e8",
         Skyblue: "#5ba4e9",
+        ButtercupYellow: "#face15",
       },
       backgroundImage: {
         /* GRADIENT-COLOR */

@@ -1,14 +1,16 @@
+import useTogglePost from "../../hooks/useTogglePost";
 import React from "react";
-import { AiFillHeart } from "react-icons/ai";
-import useToggleLikePost from "../../hooks/useToggleLikePost";
 import { useSelector } from "react-redux";
+import { AiFillHeart } from "react-icons/ai";
+/* ====================================================== */
 
 const PostLike = ({ data }) => {
   const { currentUser } = useSelector((state) => state.user);
-  const { handleLikePost, likeAmount, isLiked } = useToggleLikePost(
-    data,
-    currentUser?.userId
-  );
+  const {
+    amount: likeAmount,
+    handleTogglePost: handleLikePost,
+    toggle: isLiked,
+  } = useTogglePost(data, currentUser?.userId, "likes");
 
   return (
     <div className="flex flex-col items-center justify-center gap-1">
