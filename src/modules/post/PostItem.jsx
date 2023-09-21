@@ -8,7 +8,6 @@ import PostMeta from "./PostMeta";
 import PostLike from "./PostLike";
 import { IoIosShareAlt } from "react-icons/io";
 import { formatDateTime } from "../../utils/reuse-function";
-import { FaCommentDots } from "react-icons/fa";
 import PostCmt from "./PostCmt";
 /* ====================================================== */
 
