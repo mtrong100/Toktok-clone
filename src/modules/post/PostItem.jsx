@@ -9,6 +9,7 @@ import PostLike from "./PostLike";
 import { IoIosShareAlt } from "react-icons/io";
 import { formatDateTime } from "../../utils/reuse-function";
 import { FaCommentDots } from "react-icons/fa";
+import PostCmt from "./PostCmt";
 /* ====================================================== */
 
 const PostItem = ({ data }) => {
@@ -44,11 +45,11 @@ const PostItem = ({ data }) => {
           src={data?.video}
           className="max-h-[600px] rounded-md"
         />
+
+        {/* Post action */}
         <section className="flex flex-col gap-3">
           <PostLike data={data} />
-          <VideoIcon amount={"1383"}>
-            <FaCommentDots size={22} />
-          </VideoIcon>
+          <PostCmt data={data} />
           <PostSave data={data} />
           <VideoIcon amount={"9457"}>
             <IoIosShareAlt size={24} />

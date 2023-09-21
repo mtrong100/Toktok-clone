@@ -8,6 +8,7 @@ const UploadPage = lazy(() => import("./pages/UploadPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const SavePostPage = lazy(() => import("./pages/SavePostPage"));
 const LikePostPage = lazy(() => import("./pages/LikePostPage"));
+const PostDetailPage = lazy(() => import("./pages/PostDetailPage"));
 /* ====================================================== */
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
               <Route path="favorites" element={<LikePostPage />} />
             </Route>
           </Route>
+
+          <Route path="/video/:id" element={<PostDetailPage />} />
         </Routes>
       </Suspense>
     </>

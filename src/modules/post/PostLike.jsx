@@ -2,9 +2,10 @@ import useTogglePost from "../../hooks/useTogglePost";
 import React from "react";
 import { useSelector } from "react-redux";
 import { AiFillHeart } from "react-icons/ai";
+import { twMerge } from "tailwind-merge";
 /* ====================================================== */
 
-const PostLike = ({ data }) => {
+const PostLike = ({ data, direction = "", className = "", size = 25 }) => {
   const { currentUser } = useSelector((state) => state.user);
   const {
     amount: likeAmount,
@@ -13,14 +14,22 @@ const PostLike = ({ data }) => {
   } = useTogglePost(data, currentUser?.userId, "likes");
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1">
+    <div
+      className={twMerge(
+        "flex flex-col items-center justify-center gap-1",
+        direction
+      )}
+    >
       <span
         onClick={handleLikePost}
-        className={`${
-          isLiked ? "text-Crimson" : "text-white"
-        } w-[48px] cursor-pointer hover:bg-MidnightGray flex items-center justify-center h-[48px] bg-CharcoalGray rounded-full`}
+        className={twMerge(
+          `${
+            isLiked ? "text-Crimson" : "text-white"
+          } w-[48px] cursor-pointer hover:bg-MidnightGray flex items-center justify-center h-[48px] bg-CharcoalGray rounded-full`,
+          className
+        )}
       >
-        <AiFillHeart size={25} />
+        <AiFillHeart size={size} />
       </span>
       <small className="text-sm font-medium">{likeAmount.length || "0"}</small>
     </div>

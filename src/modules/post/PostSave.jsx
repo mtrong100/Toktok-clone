@@ -2,9 +2,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import useTogglePost from "../../hooks/useTogglePost";
+import { twMerge } from "tailwind-merge";
 /* ====================================================== */
 
-const PostSave = ({ data }) => {
+const PostSave = ({
+  data,
+  direction = "flex-col",
+  className = "",
+  size = 20,
+}) => {
   const { currentUser } = useSelector((state) => state.user);
   const {
     amount,
@@ -13,14 +19,17 @@ const PostSave = ({ data }) => {
   } = useTogglePost(data, currentUser?.userId, "saves");
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1">
+    <div className={`${direction} flex  items-center justify-center gap-1`}>
       <span
         onClick={handleSavePost}
-        className={`${
-          isSaved ? "text-ButtercupYellow" : "text-white"
-        } w-[48px] cursor-pointer hover:bg-MidnightGray flex items-center justify-center h-[48px] bg-CharcoalGray rounded-full`}
+        className={twMerge(
+          `${
+            isSaved ? "text-ButtercupYellow" : "text-white"
+          } w-[48px] cursor-pointer hover:bg-MidnightGray flex items-center justify-center h-[48px] bg-CharcoalGray rounded-full`,
+          className
+        )}
       >
-        <BsFillBookmarkFill size={20} />
+        <BsFillBookmarkFill size={size} />
       </span>
       <small className="text-sm font-medium">{amount.length || "0"}</small>
     </div>
