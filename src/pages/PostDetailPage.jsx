@@ -1,112 +1,87 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import useFetchDocRef from "../hooks/useFetchDocRef";
-import { BiArrowBack } from "react-icons/bi";
-import Skeleton from "../components/loading/Skeleton";
-import UserAvatar from "../modules/user/UserAvatar";
 import useQuerySnapshot from "../hooks/useQuerySnapshot";
-import { formatDateTime } from "../utils/reuse-function";
-import Button from "../components/button/Button";
-import PostLike from "../modules/post/PostLike";
-import PostCmt from "../modules/post/PostCmt";
-import PostSave from "../modules/post/PostSave";
 import useOnChange from "../hooks/useOnChange";
+import useFetchSubCollection from "../hooks/useFetchSubCollection";
+import useFetchComment from "../hooks/useFetchComment";
+import useAddAndUpdateCmt from "../hooks/useAddAndUpdateCmt";
+import TextareaAutosize from "react-textarea-autosize";
+import Skeleton from "../components/loading/Skeleton";
+import React, { useState } from "react";
+import PostSave from "../modules/post/PostSave";
+import PostLike from "../modules/post/PostLike";
+import PostInfo from "../modules/post/PostInfo";
+import PostCmt from "../modules/post/PostCmt";
+import CmtItem from "../modules/comment/CmtItem";
+import { v4 } from "uuid";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
 /* ====================================================== */
 
 const TabMeta = [`Comments`, "Creator's videos"];
 const PostDetailPage = () => {
   const { id: postId } = useParams();
-  const { data, isLoading } = useFetchDocRef("posts", postId);
-  const { data: user } = useQuerySnapshot("users", "userId", data?.userId);
+  const { currentUser } = useSelector((state) => state.user);
   const [activeTab, setActiveTab] = useState("Comments");
-  const date = formatDateTime(data?.createdAt);
-  const { value, handleChange } = useOnChange();
+  const { value, setValue, handleChange } = useOnChange();
+  const { data: postData, isLoading } = useQuerySnapshot(
+    "posts",
+    "postId",
+    postId
+  );
+  const { data: cmtData } = useFetchSubCollection("posts", postId, "comments");
+  const { comments } = useFetchComment(cmtData);
+  const { handleSubmit, isSubmitting } = useAddAndUpdateCmt(
+    value,
+    setValue,
+    postData?.postId,
+    currentUser?.userId
+  );
 
-  // FIX SCROLL BUG
-  useEffect(() => {
-    document.body.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
-
+  if (!postData || !postId) return null;
   return (
     <section className="flex flex-row h-screen">
       {/* Video container */}
-      <div className="relative w-full flex items-center justify-center max-w-[992px] mx-auto overflow-hidden bg-black ">
+      <div className="relative w-full flex items-center h-screen justify-center max-w-[992px] mx-auto overflow-hidden bg-black">
         {isLoading && (
           <Skeleton className="z-20 w-[422px]  object-contain h-full rounded-sm"></Skeleton>
         )}
-        {!isLoading && data && (
+        {!isLoading && postData && (
           <video
             controls
             loop
             // autoPlay
-            src={data?.video}
+            src={postData?.video}
             className="z-20 object-contain h-full rounded-sm"
           />
         )}
         <div className="absolute inset-0 bg-black bg-opacity-50 blur-xl">
-          {!isLoading && data && (
-            <video muted src={data?.video} className="img-cover" />
+          {!isLoading && postData && (
+            <video muted src={postData?.video} className="img-cover" />
           )}
         </div>
       </div>
 
       {/* Content */}
-      <section className="flex-1 h-screen  overflow-y-auto min-h-[786px]">
+      <section className="flex-1 overflow-y-auto">
         <div className="p-5">
-          <div className="p-4 rounded-xl bg-MidnightGray">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <UserAvatar size="lg" avatar={user?.photoURL} />
-                <div>
-                  <h2 className="text-lg font-semibold capitalize">
-                    {user?.username}
-                  </h2>
-                  <div className="flex items-center gap-1">
-                    <small className="text-sm font-normal">{`@${user?.slug}`}</small>
-                    <span className="font-semibold">.</span>
-                    <small className="text-xs font-normal">{date}</small>
-                  </div>
-                </div>
-              </div>
-
-              <Button variant="solid" className="rounded-md">
-                Follow
-              </Button>
-            </div>
-
-            <div className="mt-4">
-              <p className="w-full max-w-sm my-1 text-sm leading-snug">
-                {data?.title}{" "}
-                {data?.hashtag && (
-                  <span className="font-semibold text-Skyblue ">
-                    {data?.hashtag}
-                  </span>
-                )}
-              </p>
-              {data?.music && (
-                <p className="inline-block font-mono text-sm font-medium capitalize">
-                  🎵 {data?.music} 🎵
-                </p>
-              )}
-            </div>
-          </div>
+          <PostInfo data={postData} />
 
           {/* Post action */}
           <section className="flex flex-row gap-5 my-5">
             <PostLike
-              data={data}
+              data={postData}
               direction="flex-row "
               className="w-[35px] h-[35px]"
               size={20}
             />
             <PostCmt
-              data={data}
+              data={postData}
               direction="flex-row "
               className="w-[35px] h-[35px]"
               size={20}
             />
             <PostSave
-              data={data}
+              data={postData}
               direction="flex-row "
               className="w-[35px] h-[35px]"
               size={18}
@@ -125,79 +100,68 @@ const PostDetailPage = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center justify-center px-5 my-6">
+        <div className="flex items-center justify-center px-5 mb-4">
           {TabMeta.map((item) => (
             <span
               onClick={() => setActiveTab(item)}
               className={`${
                 activeTab === item
-                  ? "text-white border-LightGrey"
-                  : "opacity-50"
-              } flex items-center justify-center border-b cursor-pointer transition-all border-transparent flex-1 py-2 font-medium`}
+                  ? "text-white border-b border-LightGrey"
+                  : "opacity-50 border-b border-transparent"
+              } flex items-center justify-center  cursor-pointer transition-all  flex-1 py-2 font-medium`}
               key={item}
             >
-              {item === "Comments" ? `Comments (16)` : item}
+              {item === "Comments" ? `Comments (${comments.length})` : item}
             </span>
           ))}
         </div>
 
         {/* Comment section */}
-        <main className="">
-          <ul className="h-full px-5">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui ipsam
-            dicta ab molestias vero incidunt? Earum sed hic repellendus
-            perspiciatis ad nihil voluptas eligendi pariatur cumque esse!
-            Reiciendis, maxime eum! Lorem ipsum, dolor sit amet consectetur
-            adipisicing elit. Eos incidunt ad tempore cumque facilis quisquam
-            quos magnam a debitis explicabo, molestias, veritatis saepe sit
-            laudantium repellat dolorum. Ad, cum reiciendis. Nisi velit fugiat,
-            ex libero voluptas modi amet, explicabo quos nemo harum obcaecati
-            illo. Voluptatum pariatur reiciendis aut, inventore ducimus mollitia
-            ipsum voluptas architecto culpa similique consequuntur enim ut
-            sequi? Nulla fugit nemo sapiente provident, dolor porro minus saepe
-            ipsam, sed esse odio ipsum adipisci voluptatem voluptatum deserunt
-            assumenda neque accusamus asperiores ut. Aspernatur aliquid
-            doloremque voluptate, laboriosam porro hic. Ullam necessitatibus,
-            obcaecati, molestias tenetur, explicabo autem repellendus fugiat
-            error voluptates odit harum quaerat impedit natus aut corrupti ad
-            cum officiis veniam distinctio quasi dicta iure. Facere consequuntur
-            tempora sapiente. Minima quo at incidunt et ut reprehenderit id
-            quasi blanditiis, numquam, rerum ab quidem neque dolores, sunt
-            repellendus laboriosam obcaecati. Adipisci voluptates eveniet atque
-            molestiae quas eius perspiciatis! Expedita, laborum? Assumenda
-            consequatur vel porro dolorem rerum modi, totam dolorum
-            perspiciatis. Fuga laborum aliquam laudantium accusantium expedita
-            modi reprehenderit voluptatum quod. Tenetur, quis animi recusandae
-            sit libero id ratione odit sunt. Dolor delectus beatae ipsum sint
-            sapiente magnam dolorem libero eveniet fuga culpa officia voluptates
-            enim ducimus quam odit fugiat cupiditate, tenetur numquam veritatis
-            quasi voluptatibus? Sit inventore veritatis assumenda ducimus. Alias
-            architecto animi laboriosam, ex officia nulla quisquam vitae
-            incidunt, dolore, suscipit voluptatem similique labore. Voluptatum
+        <section className="relative flex flex-col">
+          <ul className="flex-1 px-5 py-5 min-h-[500px] flex flex-col gap-6">
+            {comments.length > 0 &&
+              comments.map((item) => <CmtItem key={v4()} data={item} />)}
           </ul>
-          <section className="sticky bottom-0 flex items-center w-full gap-2 p-5 border-t bg-MainDark border-DimeGray">
-            <input
+
+          <form
+            onSubmit={handleSubmit}
+            className="sticky bottom-0 z-10 flex items-center w-full gap-2 p-4 border-t bg-MainDark border-DimeGray"
+          >
+            <TextareaAutosize
               value={value}
               onChange={handleChange}
-              type="text"
-              className="w-full p-2 rounded-lg bg-CharcoalGray"
               placeholder="Write comments...."
+              className="w-full p-3 rounded-lg resize-none bg-CharcoalGray max-h-[118px] h-full"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit();
+                }
+              }}
             />
-            <span
+
+            <button
+              onClick={handleSubmit}
               className={`${
-                value ? "text-Crimson" : "opacity-50"
-              } flex-shrink-0 text-sm font-semibold  cursor-auto`}
+                value
+                  ? "text-Crimson cursor-pointer"
+                  : "opacity-50 text-LightGrey cursor-not-allowed"
+              } ${
+                isSubmitting
+                  ? "cursor-not-allowed opacity-50"
+                  : "cursor-not-allowed"
+              } flex-shrink-0 text-base font-semibold  w-[40px] h-[40px] flex items-center justify-center`}
             >
               Post
-            </span>
-          </section>
-        </main>
+            </button>
+          </form>
+        </section>
       </section>
 
       {/* Back */}
       <Link
         to="/"
-        className="fixed flex items-center rounded-full justify-center top-6 left-8 w-[40px] h-[40px] bg-[#3f3f3f] hover:bg-CharcoalGray text-white cursor-pointer"
+        className="fixed flex items-center rounded-full justify-center top-6 left-8 w-[40px] h-[40px] bg-[#3f3f3f] hover:bg-Crimson text-white cursor-pointer"
       >
         <BiArrowBack size={22} />
       </Link>

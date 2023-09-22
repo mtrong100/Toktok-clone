@@ -10,6 +10,8 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../utils/firebase-app";
+import { toast } from "react-toastify";
+import { ToastConfig } from "../constants/constants";
 /* ====================================================== */
 
 const useTogglePost = (postData, currentUserUID, subCollectionName) => {
@@ -56,7 +58,12 @@ const useTogglePost = (postData, currentUserUID, subCollectionName) => {
 
   // Handle user like post
   const handleTogglePost = async () => {
-    if (!currentUserUID || !postId) return;
+    if (!currentUserUID) {
+      toast.info("Please sign in", ToastConfig);
+      return;
+    }
+    if (!postId) return;
+
     const postLikeDoc = doc(
       db,
       "posts",

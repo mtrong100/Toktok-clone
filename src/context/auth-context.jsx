@@ -12,9 +12,10 @@ const AuthContext = createContext();
 function AuthProvider(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userDocRef = query(
@@ -32,6 +33,7 @@ function AuthProvider(props) {
         });
       } else {
         dispatch(setCurrentUser(null));
+        setLoading(false);
       }
     });
   }, [dispatch, navigate]);

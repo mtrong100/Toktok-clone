@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { db } from "../utils/firebase-app";
 
 export default function useFetchDocRef(collectionName, fieldValue) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -11,6 +11,7 @@ export default function useFetchDocRef(collectionName, fieldValue) {
       setIsLoading(true);
       const postDoc = doc(db, collectionName, fieldValue);
       const docSnapshot = await getDoc(postDoc);
+
       if (docSnapshot.exists()) {
         setData(docSnapshot.data());
         setIsLoading(false);

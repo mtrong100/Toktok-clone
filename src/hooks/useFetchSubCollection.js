@@ -9,9 +9,10 @@ export default function useFetchSubCollection(
   subCollectionName
 ) {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     if (!itemId) return;
 
     const colRef = collection(db, collectionName, itemId, subCollectionName);
