@@ -36,7 +36,7 @@ const Header = () => {
         <div className="flex items-center justify-end gap-5">
           {currentUser && (
             <Link
-              to={`/upload`}
+              to={`/creator/upload`}
               className="flex items-center justify-center gap-1 px-4 h-[36px] font-semibold border border-transparent rounded-sm bg-DarkGray hover:border-DimeGray"
             >
               <span>

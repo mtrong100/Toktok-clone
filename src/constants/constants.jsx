@@ -2,10 +2,10 @@ import {
   AiFillHome,
   AiFillVideoCamera,
   AiOutlineUnorderedList,
+  AiOutlineUpload,
 } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
-import { MdExplore } from "react-icons/md";
-import { BiSolidLockAlt } from "react-icons/bi";
+import { MdExplore, MdOutlineUploadFile } from "react-icons/md";
 
 export const SidebarLinks = [
   {
@@ -55,10 +55,16 @@ export const UploadSidebar = [
     icon: <AiFillHome />,
   },
   {
+    name: "Upload",
+    path: "/creator/upload",
+    icon: <MdOutlineUploadFile />,
+  },
+  {
     name: "Posts",
-    path: "/post",
+    path: "/creator/manage",
     icon: <AiOutlineUnorderedList />,
   },
 ];
 
 export const WatchOptions = ["Public", "Friends", "Private"];
+export const TableTitle = ["Posts", "Actions", "Date", "Status"];

@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import MainLayout from "./components/layouts/MainLayout";
 import ProfileLayout from "./components/layouts/ProfileLayout";
+import CreatorLayout from "./components/layouts/CreatorLayout";
 /* ====================================================== */
 const HomePage = lazy(() => import("./pages/HomePage"));
 const UploadPage = lazy(() => import("./pages/UploadPage"));
@@ -11,6 +12,7 @@ const LikePostPage = lazy(() => import("./pages/LikePostPage"));
 const PostDetailPage = lazy(() => import("./pages/PostDetailPage"));
 const FollowingPage = lazy(() => import("./pages/FollowingPage"));
 const ExplorePage = lazy(() => import("./pages/ExplorePage"));
+const ManagePage = lazy(() => import("./pages/ManagePage"));
 /* ====================================================== */
 
 function App() {
@@ -24,7 +26,10 @@ function App() {
         }
       >
         <Routes>
-          <Route path="/upload" element={<UploadPage />} />
+          <Route element={<CreatorLayout />}>
+            <Route path="/creator/upload" element={<UploadPage />} />
+            <Route path="/creator/manage" element={<ManagePage />} />
+          </Route>
 
           <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
