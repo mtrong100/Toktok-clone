@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import UpdateProfileModal from "../components/modal/UpdateProfileModal";
 import useToggleValue from "../hooks/useToggleValue";
 import useFetchSubCollection from "../hooks/useFetchSubCollection";
+import ButtonScrollTop from "../components/button/ButtonScrollTop";
 /* ====================================================== */
 
 const ProfilePage = () => {
@@ -99,7 +100,7 @@ const ProfilePage = () => {
         />
       )}
 
-      <main className="mt-5">
+      <main className="mt-7">
         <ul className="grid grid-cols-5 gap-2">
           {location.pathname === `/${slug}` && (
             <React.Fragment>
@@ -120,6 +121,7 @@ const ProfilePage = () => {
         </ul>
       </main>
 
+      <ButtonScrollTop />
       <UpdateProfileModal isOpen={showModal} onClose={handleToggle} />
     </React.Fragment>
   );
@@ -144,7 +146,7 @@ function ProfileMeta({ follwing, followers }) {
 
 function TabIndicator({ TabHeader = [], setSelected, selected }) {
   return (
-    <section className="flex items-center my-5">
+    <section className="flex items-center mt-5">
       {TabHeader.map((item) => (
         <Link
           to={item.path}

@@ -11,11 +11,19 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import useQueryCollection from "../hooks/useQueryCollection";
+import { BiSearch } from "react-icons/bi";
+import useOnChange from "../hooks/useOnChange";
 /* ====================================================== */
 
 const ManagePage = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const { value, handleChange } = useOnChange();
   const { data } = useQueryCollection("posts", "userId", currentUser?.userId);
+
+  // Search user
+  const filteredPost = data.filter((item) =>
+    item.title.toLowerCase().includes(value.toLowerCase())
+  );
 
   // FIX SCROLL BUG
   useEffect(() => {
@@ -23,7 +31,23 @@ const ManagePage = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-5xl p-5 mx-auto mt-10 rounded-md shadow-xl bg-CharcoalGray">
+    <div className="w-full max-w-5xl p-5 mx-auto rounded-md shadow-xl bg-CharcoalGray">
+      <section className="flex items-center justify-between mb-5">
+        <h1 className="text-2xl font-semibold">Manage your posts</h1>
+        <div className="flex items-center justify-between w-full py-3 px-4 relative max-w-[350px] bg-DarkGray gap-1 border  rounded-full group border-DimeGray hover:border-LightGrey">
+          <input
+            value={value}
+            onChange={handleChange}
+            type="text"
+            placeholder="Search..."
+            className="w-full caret-Crimson"
+          />
+          <span className="pl-2 border-l border-DimeGray">
+            <BiSearch size={20} />
+          </span>
+        </div>
+      </section>
+
       <table className="w-full border-collapse">
         <thead>
           <tr>
@@ -38,8 +62,8 @@ const ManagePage = () => {
           </tr>
         </thead>
         <tbody>
-          {data.length > 0 &&
-            data.map((item) => <TableItem key={v4} data={item} />)}
+          {filteredPost.length > 0 &&
+            filteredPost.map((item) => <TableItem key={v4} data={item} />)}
         </tbody>
       </table>
     </div>

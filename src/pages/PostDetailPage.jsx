@@ -49,7 +49,7 @@ const PostDetailPage = () => {
           <video
             controls
             loop
-            // autoPlay
+            autoPlay
             src={postData?.video}
             className="z-20 object-contain h-full rounded-sm"
           />

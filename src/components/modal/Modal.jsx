@@ -25,7 +25,7 @@ export default function Modal({ isOpen, onClose }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 backdrop-blur-md" />
+            <div className="fixed inset-0 backdrop-blur-sm" />
           </Transition.Child>
 
           <div className="fixed inset-0 z-30 overflow-y-auto">

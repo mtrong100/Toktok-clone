@@ -1,23 +1,35 @@
-import VideoIcon from "../videos/VideoIcon";
 import UserAvatar from "../user/UserAvatar";
 import useQuerySnapshot from "../../hooks/useQuerySnapshot";
 import Skeleton from "../../components/loading/Skeleton";
 import React from "react";
+import PostShare from "./PostShare";
 import PostSave from "./PostSave";
 import PostMeta from "./PostMeta";
 import PostLike from "./PostLike";
-import { IoIosShareAlt } from "react-icons/io";
-import { formatDateTime } from "../../utils/reuse-function";
 import PostCmt from "./PostCmt";
-import Button from "../../components/button/Button";
 import ButtonFollow from "../../components/button/ButtonFollow";
 import { useSelector } from "react-redux";
+import { formatDateTime } from "../../utils/reuse-function";
+import { toast } from "react-toastify";
+import { ToastConfig } from "../../constants/constants";
 /* ====================================================== */
 
 const PostItem = ({ data }) => {
   const { currentUser } = useSelector((state) => state.user);
   const { data: user } = useQuerySnapshot("users", "userId", data?.userId);
   const date = formatDateTime(data?.createdAt);
+
+  const copyLink = (link) => {
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
+        toast.success("Copied!", ToastConfig);
+      })
+      .catch((error) => {
+        console.error("Failed to copy link: ", error);
+        alert("Copy link failed. Please try again.");
+      });
+  };
 
   return (
     <article className="flex flex-col gap-2">
@@ -54,9 +66,13 @@ const PostItem = ({ data }) => {
           <PostLike data={data} />
           <PostCmt data={data} />
           <PostSave data={data} />
-          <VideoIcon amount={"290"}>
-            <IoIosShareAlt size={24} />
-          </VideoIcon>
+          <PostShare
+            onClick={() =>
+              copyLink(
+                `https://toktok-clone-mu.vercel.app/video/${data?.postId}`
+              )
+            }
+          />
         </section>
       </div>
     </article>

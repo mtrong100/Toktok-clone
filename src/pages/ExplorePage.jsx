@@ -5,6 +5,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import useQuerySnapshot from "../hooks/useQuerySnapshot";
 import UserAvatar from "../modules/user/UserAvatar";
 import useFetchSubCollection from "../hooks/useFetchSubCollection";
+import ButtonScrollTop from "../components/button/ButtonScrollTop";
 /* ====================================================== */
 
 const ExplorePage = () => {
@@ -15,6 +16,7 @@ const ExplorePage = () => {
       {!isLoading &&
         data.length > 0 &&
         data.map((item) => <ExplorePostItem key={v4()} data={item} />)}
+      <ButtonScrollTop />
     </section>
   );
 };

@@ -3,15 +3,17 @@ import { useSelector } from "react-redux";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import UserAvatar from "../../modules/user/UserAvatar";
 import { UploadSidebar } from "../../constants/constants";
+import ButtonScrollTop from "../button/ButtonScrollTop";
 
 const CreatorLayout = () => {
   return (
     <section>
       <Header />
       <Sidebar />
-      <main className="relative flex flex-col ml-[240px] mt-[60px]">
+      <main className="relative flex flex-col ml-[240px] pt-[100px]">
         <Outlet />
       </main>
+      <ButtonScrollTop />
     </section>
   );
 };

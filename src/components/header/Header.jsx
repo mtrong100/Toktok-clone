@@ -79,7 +79,7 @@ function SearchBox() {
           value={value}
           onChange={handleChange}
           type="text"
-          placeholder="Search..."
+          placeholder="Search user..."
           className="w-full caret-Crimson"
         />
         <span className="pl-2 border-l border-DimeGray">
