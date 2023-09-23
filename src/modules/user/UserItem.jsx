@@ -1,16 +1,20 @@
 import React from "react";
 import UserAvatar from "./UserAvatar";
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+/* ====================================================== */
 
-const UserItem = () => {
+const UserItem = ({ data }) => {
   return (
-    <li className="h-[48px] px-5  flex items-center cursor-pointer font-semibold hover:bg-CharcoalGray transition-all rounded-sm gap-3 text-lg">
-      <UserAvatar size="base" avatar={"https://source.unsplash.com/random"} />
+    <Link
+      to={`${data?.slug}`}
+      className="h-[48px] px-5  flex items-center cursor-pointer font-semibold hover:bg-CharcoalGray transition-all rounded-sm gap-3 text-lg"
+    >
+      <UserAvatar size="base" avatar={data?.photoURL} />
       <div>
-        <h3 className="text-sm font-semibold">Nobuyuki</h3>
-        <p className="text-xs opacity-80">@Nobuyuki</p>
+        <h3 className="text-sm font-semibold">{data?.username}</h3>
+        <p className="text-xs opacity-80">{`@${data?.slug}`}</p>
       </div>
-    </li>
+    </Link>
   );
 };
 

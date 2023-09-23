@@ -1,13 +1,13 @@
 import UserItem from "../../modules/user/UserItem";
+import useFetchCollection from "../../hooks/useFetchCollection";
 import React from "react";
 import { v4 } from "uuid";
-import { useSelector } from "react-redux";
 import { SidebarLinks } from "../../constants/constants";
 import { NavLink } from "react-router-dom";
 /* ====================================================== */
 
 const Sidebar = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { data } = useFetchCollection("users", true);
 
   return (
     <section className="w-[240px] fixed top-[64px]  border-r z-20 h-screen border-CharcoalGray bg-MainDark ">
@@ -33,11 +33,8 @@ const Sidebar = () => {
           Following accounts
         </h4>
         <ul className="flex flex-col gap-1 mt-2">
-          {Array(7)
-            .fill(0)
-            .map((item, index) => (
-              <UserItem key={v4()} />
-            ))}
+          {data.length > 0 &&
+            data.map((item) => <UserItem key={v4()} data={item} />)}
         </ul>
       </section>
     </section>

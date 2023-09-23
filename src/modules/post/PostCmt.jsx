@@ -15,7 +15,6 @@ const PostCmt = ({
 }) => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
-
   const { data: amount } = useFetchSubCollection(
     "posts",
     data?.postId,

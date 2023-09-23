@@ -8,6 +8,7 @@ const sizeClasses = {
   lg: "w-[40px] h-[40px]",
   md: "w-[35px] h-[35px]",
   base: "w-[32px] h-[32px]",
+  sm: "w-[28px] h-[28px]",
 };
 
 const UserAvatar = ({ avatar, size = "md" }) => {

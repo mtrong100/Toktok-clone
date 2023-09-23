@@ -9,6 +9,8 @@ const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const SavePostPage = lazy(() => import("./pages/SavePostPage"));
 const LikePostPage = lazy(() => import("./pages/LikePostPage"));
 const PostDetailPage = lazy(() => import("./pages/PostDetailPage"));
+const FollowingPage = lazy(() => import("./pages/FollowingPage"));
+const ExplorePage = lazy(() => import("./pages/ExplorePage"));
 /* ====================================================== */
 
 function App() {
@@ -26,9 +28,11 @@ function App() {
 
           <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/following" element={<FollowingPage />} />
           </Route>
 
           <Route element={<ProfileLayout />}>
+            <Route path="/explore" element={<ExplorePage />} />
             <Route path="/:slug" element={<ProfilePage />}>
               <Route path="saves" element={<SavePostPage />} />
               <Route path="favorites" element={<LikePostPage />} />

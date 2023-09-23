@@ -11,6 +11,7 @@ import { v4 } from "uuid";
 import { useSelector } from "react-redux";
 import UpdateProfileModal from "../components/modal/UpdateProfileModal";
 import useToggleValue from "../hooks/useToggleValue";
+import useFetchSubCollection from "../hooks/useFetchSubCollection";
 /* ====================================================== */
 
 const ProfilePage = () => {
@@ -24,6 +25,18 @@ const ProfilePage = () => {
     "posts",
     "userId",
     user?.userId
+  );
+  const { data: follwingAmount } = useFetchSubCollection(
+    "users",
+    user?.userId,
+    "following",
+    false
+  );
+  const { data: followerAmount } = useFetchSubCollection(
+    "users",
+    user?.userId,
+    "followers",
+    false
   );
 
   const TabHeader = [
@@ -75,13 +88,16 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      <ProfileMeta />
+      <ProfileMeta follwing={follwingAmount} followers={followerAmount} />
       <p className="w-full max-w-lg text-sm">{user?.bio || ""}</p>
-      <TabIndicator
-        TabHeader={TabHeader}
-        setSelected={setSelected}
-        selected={selected}
-      />
+
+      {currentUser?.slug === slug && (
+        <TabIndicator
+          TabHeader={TabHeader}
+          setSelected={setSelected}
+          selected={selected}
+        />
+      )}
 
       <main className="mt-5">
         <ul className="grid grid-cols-5 gap-2">
@@ -111,20 +127,16 @@ const ProfilePage = () => {
 
 export default ProfilePage;
 
-function ProfileMeta() {
+function ProfileMeta({ follwing, followers }) {
   return (
     <section className="flex items-center gap-5 mt-8 mb-2">
       <div className="flex items-center gap-1">
-        <span className="font-semibold">11</span>
+        <span className="font-semibold">{follwing.length || "0"}</span>
         Following
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-semibold">133</span>
+        <span className="font-semibold">{followers.length || "0"}</span>
         Followers
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-semibold">2561</span>
-        Likes
       </div>
     </section>
   );
