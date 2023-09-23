@@ -5,7 +5,9 @@ import { twMerge } from "tailwind-merge";
 
 const variantClasses = {
   solid: "bg-Crimson hover:bg-opacity-80",
-  bordered: "border border-Crimson hover:bg-white hover:bg-opacity-10",
+  secondary: "bg-MidnightGray text-white hover:bg-CharcoalGray",
+  bordered:
+    "border border-Crimson hover:bg-white hover:bg-opacity-10 text-Crimson",
 };
 
 const Button = ({
@@ -39,7 +41,7 @@ Button.propTypes = {
   type: PropTypes.oneOf(["button", "submit", "reset"]),
   className: PropTypes.string,
   isLoading: PropTypes.bool,
-  variant: PropTypes.oneOf(["solid", "bordered"]),
+  variant: PropTypes.oneOf(["solid", "bordered", "secondary"]),
 };
 
 export default Button;

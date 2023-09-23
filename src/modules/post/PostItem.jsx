@@ -9,9 +9,13 @@ import PostLike from "./PostLike";
 import { IoIosShareAlt } from "react-icons/io";
 import { formatDateTime } from "../../utils/reuse-function";
 import PostCmt from "./PostCmt";
+import Button from "../../components/button/Button";
+import ButtonFollow from "../../components/button/ButtonFollow";
+import { useSelector } from "react-redux";
 /* ====================================================== */
 
 const PostItem = ({ data }) => {
+  const { currentUser } = useSelector((state) => state.user);
   const { data: user } = useQuerySnapshot("users", "userId", data?.userId);
   const date = formatDateTime(data?.createdAt);
 
@@ -30,9 +34,9 @@ const PostItem = ({ data }) => {
           />
         </div>
 
-        <button className="h-[36px] px-5 border flex items-center justify-center rounded-sm cursor-pointer font-medium border-Crimson text-Crimson hover:bg-CharcoalGray">
-          Follow
-        </button>
+        {currentUser?.userId !== data?.userId && (
+          <ButtonFollow uid={data?.userId} />
+        )}
       </div>
 
       <div className="ml-[62px] flex items-end gap-5">

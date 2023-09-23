@@ -14,9 +14,11 @@ import {
 import slugify from "slugify";
 import { toast } from "react-toastify";
 import { TiktokLinks, ToastConfig } from "../../constants/constants";
+import { useNavigate } from "react-router-dom";
 /* =================================================================== */
 
 export default function Modal({ isOpen, onClose }) {
+  const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
 
   const googleLogin = async () => {
@@ -46,6 +48,7 @@ export default function Modal({ isOpen, onClose }) {
         });
       }
 
+      navigate("/");
       toast.success("Welcome to tiktok!", ToastConfig);
       onClose();
       window.location.reload();

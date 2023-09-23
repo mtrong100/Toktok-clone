@@ -8,14 +8,18 @@ import useQuerySnapshot from "../hooks/useQuerySnapshot";
 import useQueryCollection from "../hooks/useQueryCollection";
 import PostPreview, { PostPreviewSkeleton } from "../modules/post/PostPreview";
 import { v4 } from "uuid";
+import { useSelector } from "react-redux";
+import UpdateProfileModal from "../components/modal/UpdateProfileModal";
+import useToggleValue from "../hooks/useToggleValue";
 /* ====================================================== */
 
 const ProfilePage = () => {
   const { slug } = useParams();
   const location = useLocation();
+  const { currentUser } = useSelector((state) => state.user);
   const [selected, setSelected] = useState("Videos");
+  const { toggle: showModal, handleToggle } = useToggleValue();
   const { data: user } = useQuerySnapshot("users", "slug", slug);
-
   const { data: posts, isLoading } = useQueryCollection(
     "posts",
     "userId",
@@ -45,22 +49,25 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <section>
+    <React.Fragment>
       <div className="flex items-center gap-5">
         <UserAvatar avatar={user?.photoURL} size="xxl" />
         <div className="flex flex-col gap-2">
           <h1 className="text-[32px] font-bold">{user?.username}</h1>
           <span className="text-lg font-medium">@{user?.slug}</span>
           <div className="flex items-center gap-4">
-            <Button
-              variant="bordered"
-              className="flex items-center gap-2 border-transparent hover:border-DimeGray bg-CharcoalGray"
-            >
-              <span>
-                <BiEdit size={18} />
-              </span>
-              Edit profile
-            </Button>
+            {currentUser?.userId === user?.userId && (
+              <Button
+                onClick={handleToggle}
+                variant="bordered"
+                className="flex items-center gap-2 text-white border-transparent hover:border-DimeGray bg-CharcoalGray"
+              >
+                <span>
+                  <BiEdit size={18} />
+                </span>
+                Edit profile
+              </Button>
+            )}
             <span className="cursor-pointer">
               <IoIosShareAlt size={25} />
             </span>
@@ -69,9 +76,7 @@ const ProfilePage = () => {
       </div>
 
       <ProfileMeta />
-      <p className="w-full max-w-lg text-sm">
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-      </p>
+      <p className="w-full max-w-lg text-sm">{user?.bio || ""}</p>
       <TabIndicator
         TabHeader={TabHeader}
         setSelected={setSelected}
@@ -98,7 +103,9 @@ const ProfilePage = () => {
           <Outlet />
         </ul>
       </main>
-    </section>
+
+      <UpdateProfileModal isOpen={showModal} onClose={handleToggle} />
+    </React.Fragment>
   );
 };
 
