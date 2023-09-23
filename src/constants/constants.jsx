@@ -23,11 +23,6 @@ export const SidebarLinks = [
     icon: <MdExplore />,
     path: "/explore",
   },
-  // {
-  //   name: "Live",
-  //   icon: <AiFillVideoCamera />,
-  //   path: "/",
-  // },
 ];
 
 export const TiktokLinks = [

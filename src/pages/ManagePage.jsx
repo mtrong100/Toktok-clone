@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { TableTitle, ToastConfig } from "../constants/constants";
-import useFetchCollection from "../hooks/useFetchCollection";
 import { v4 } from "uuid";
 import { AiOutlineDelete, AiFillHeart } from "react-icons/ai";
 import { BsChatDotsFill } from "react-icons/bs";
@@ -10,10 +9,13 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../utils/firebase-app";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import useQueryCollection from "../hooks/useQueryCollection";
 /* ====================================================== */
 
 const ManagePage = () => {
-  const { data } = useFetchCollection("posts");
+  const { currentUser } = useSelector((state) => state.user);
+  const { data } = useQueryCollection("posts", "userId", currentUser?.userId);
 
   // FIX SCROLL BUG
   useEffect(() => {

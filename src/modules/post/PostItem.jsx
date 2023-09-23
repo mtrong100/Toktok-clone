@@ -54,7 +54,7 @@ const PostItem = ({ data }) => {
           <PostLike data={data} />
           <PostCmt data={data} />
           <PostSave data={data} />
-          <VideoIcon amount={"9457"}>
+          <VideoIcon amount={"290"}>
             <IoIosShareAlt size={24} />
           </VideoIcon>
         </section>
