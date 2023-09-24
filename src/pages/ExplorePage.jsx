@@ -12,7 +12,7 @@ const ExplorePage = () => {
   const { data, isLoading } = useFetchCollection("posts");
 
   return (
-    <section className="grid grid-cols-4 gap-x-5 gap-y-8">
+    <section className="grid grid-cols-3 gap-3 lg:grid-cols-4 lg:gap-x-5 lg:gap-y-8">
       {!isLoading &&
         data.length > 0 &&
         data.map((item) => <ExplorePostItem key={v4()} data={item} />)}
@@ -36,12 +36,12 @@ const ExplorePostItem = ({ data }) => {
       <video controls loop muted src={data?.video} className="rounded-lg" />
       <div className="flex flex-col gap-3 p-2">
         <p>{data?.title}</p>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
             <UserAvatar avatar={user?.photoURL} size="sm" />
             <span className="font-medium">{user?.username}</span>
           </div>
-          <div className="flex items-center gap-1 font-semibold opacity-70">
+          <div className="items-center hidden gap-1 font-semibold lg:flex opacity-70">
             <span>
               <AiOutlineHeart size={20} />
             </span>

@@ -101,7 +101,7 @@ const ProfilePage = () => {
       )}
 
       <main className="mt-7">
-        <ul className="grid grid-cols-5 gap-2">
+        <ul className="grid grid-cols-3 gap-2 lg:grid-cols-5">
           {location.pathname === `/${slug}` && (
             <React.Fragment>
               {isLoading &&

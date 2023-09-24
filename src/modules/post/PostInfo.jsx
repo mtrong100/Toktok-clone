@@ -3,6 +3,7 @@ import Button from "../../components/button/Button";
 import UserAvatar from "../user/UserAvatar";
 import useQuerySnapshot from "../../hooks/useQuerySnapshot";
 import { formatDateTime } from "../../utils/reuse-function";
+import ButtonFollow from "../../components/button/ButtonFollow";
 /* ====================================================== */
 
 const PostInfo = ({ data }) => {
@@ -26,9 +27,7 @@ const PostInfo = ({ data }) => {
           </div>
         </div>
 
-        <Button variant="solid" className="rounded-md">
-          Follow
-        </Button>
+        <ButtonFollow uid={data?.postId} />
       </div>
 
       <div className="mt-4">

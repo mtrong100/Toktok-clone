@@ -10,7 +10,7 @@ const MainLayout = () => {
       <Header />
       <Sidebar />
       <main className="relative flex flex-col ml-[240px] pt-[70px]">
-        <section className="w-full max-w-[690px] py-5 mx-auto flex flex-col gap-8">
+        <section className="w-full max-w-[690px] p-6 lg:py-5 mx-auto flex flex-col gap-8">
           <Outlet />
         </section>
       </main>

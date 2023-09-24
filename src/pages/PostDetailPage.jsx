@@ -15,6 +15,7 @@ import { v4 } from "uuid";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
+import useQueryCollection from "../hooks/useQueryCollection";
 /* ====================================================== */
 
 const TabMeta = [`Comments`, "Creator's videos"];
@@ -36,6 +37,13 @@ const PostDetailPage = () => {
     postData?.postId,
     currentUser?.userId
   );
+
+  const { data: posts, isLoading: pending } = useQueryCollection(
+    "posts",
+    "userId",
+    postData?.userId
+  );
+  const relatedPosts = posts.filter((item) => item.postId !== postData?.postId);
 
   if (!postData || !postId) return null;
   return (
@@ -67,7 +75,7 @@ const PostDetailPage = () => {
           <PostInfo data={postData} />
 
           {/* Post action */}
-          <section className="flex flex-row gap-5 my-5">
+          <section className="flex flex-row gap-5 mt-5">
             <PostLike
               data={postData}
               direction="flex-row "
@@ -87,16 +95,6 @@ const PostDetailPage = () => {
               size={18}
             />
           </section>
-
-          {/* Copy link */}
-          <div className="flex items-center text-xs">
-            <p className="p-2 bg-MidnightGray">
-              https://toktok-clone-mu.vercel.app/video/{postId}
-            </p>
-            <span className="p-2 font-semibold rounded cursor-pointer bg-DarkGray">
-              Copy link
-            </span>
-          </div>
         </div>
 
         {/* Tabs */}
@@ -117,45 +115,68 @@ const PostDetailPage = () => {
         </div>
 
         {/* Comment section */}
-        <section className="relative flex flex-col">
-          <ul className="flex-1 px-5 py-5 min-h-[500px] flex flex-col gap-6">
-            {comments.length > 0 &&
-              comments.map((item) => <CmtItem key={v4()} data={item} />)}
-          </ul>
+        {activeTab === "Comments" ? (
+          <section className="relative flex flex-col">
+            <ul className="flex-1 px-5 py-5 min-h-[500px] flex flex-col gap-6">
+              {comments.length > 0 &&
+                comments.map((item) => <CmtItem key={v4()} data={item} />)}
+            </ul>
 
-          <form
-            onSubmit={handleSubmit}
-            className="sticky bottom-0 z-10 flex items-center w-full gap-2 p-4 border-t bg-MainDark border-DimeGray"
-          >
-            <TextareaAutosize
-              value={value}
-              onChange={handleChange}
-              placeholder="Write comments...."
-              className="w-full p-3 rounded-lg resize-none bg-CharcoalGray max-h-[118px] h-full"
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSubmit();
-                }
-              }}
-            />
-
-            <button
-              onClick={handleSubmit}
-              className={`${
-                value
-                  ? "text-Crimson cursor-pointer"
-                  : "opacity-50 text-LightGrey cursor-not-allowed"
-              } ${
-                isSubmitting
-                  ? "cursor-not-allowed opacity-50"
-                  : "cursor-not-allowed"
-              } flex-shrink-0 text-base font-semibold  w-[40px] h-[40px] flex items-center justify-center`}
+            <form
+              onSubmit={handleSubmit}
+              className="sticky bottom-0 z-10 flex items-center w-full gap-2 p-4 border-t bg-MainDark border-DimeGray"
             >
-              Post
-            </button>
-          </form>
-        </section>
+              <TextareaAutosize
+                value={value}
+                onChange={handleChange}
+                placeholder="Write comments...."
+                className="w-full p-3 rounded-lg resize-none bg-CharcoalGray max-h-[118px] h-full"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit();
+                  }
+                }}
+              />
+
+              <button
+                onClick={handleSubmit}
+                className={`${
+                  value
+                    ? "text-Crimson cursor-pointer"
+                    : "opacity-50 text-LightGrey cursor-not-allowed"
+                } ${
+                  isSubmitting
+                    ? "cursor-not-allowed opacity-50"
+                    : "cursor-not-allowed"
+                } flex-shrink-0 text-base font-semibold  w-[40px] h-[40px] flex items-center justify-center`}
+              >
+                Post
+              </button>
+            </form>
+          </section>
+        ) : (
+          <React.Fragment>
+            {relatedPosts.length === 0 && (
+              <div className="w-full mt-20 text-xl font-semibold text-center opacity-80">
+                This user only has 1 video
+              </div>
+            )}
+
+            <section className="grid grid-cols-3 gap-2 p-5">
+              {relatedPosts.length > 0 &&
+                relatedPosts.map((item) => (
+                  <Link to={`/video/${item.postId}`} key={v4()}>
+                    <video
+                      muted
+                      src={item?.video}
+                      className="rounded-md img-cover"
+                    ></video>
+                  </Link>
+                ))}
+            </section>
+          </React.Fragment>
+        )}
       </section>
 
       {/* Back */}

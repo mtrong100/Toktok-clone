@@ -10,7 +10,7 @@ const CreatorLayout = () => {
     <section>
       <Header />
       <Sidebar />
-      <main className="relative flex flex-col ml-[240px] pt-[100px]">
+      <main className="relative flex flex-col ml-[240px] pt-[100px] xl:px-0 px-6">
         <Outlet />
       </main>
       <ButtonScrollTop />
