@@ -10,7 +10,7 @@ const CreatorLayout = () => {
     <section>
       <Header />
       <Sidebar />
-      <main className="relative flex flex-col ml-[240px] pt-[100px] xl:px-0 px-6">
+      <main className="relative flex flex-col lg:ml-[240px] pt-[150px] lg:pt-[100px] xl:px-0 px-6">
         <Outlet />
       </main>
       <ButtonScrollTop />
@@ -46,7 +46,7 @@ function Header() {
 
 function Sidebar() {
   return (
-    <section className="w-[240px] fixed left-0 top-[60px] h-screen p-3 border-r border-CharcoalGray">
+    <section className="w-[240px] fixed lg:block hidden left-0 top-[60px] h-screen p-3 border-r border-CharcoalGray">
       <ul className="flex flex-col">
         {UploadSidebar.map((item) => (
           <NavLink

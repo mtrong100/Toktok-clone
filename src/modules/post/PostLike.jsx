@@ -31,7 +31,9 @@ const PostLike = ({ data, direction = "", className = "", size = 25 }) => {
       >
         <AiFillHeart size={size} />
       </span>
-      <small className="text-sm font-medium">{likeAmount.length || "0"}</small>
+      <small className="text-4xl font-semibold xl:font-medium xl:text-sm">
+        {likeAmount.length || "0"}
+      </small>
     </div>
   );
 };

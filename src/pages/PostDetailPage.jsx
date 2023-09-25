@@ -14,9 +14,11 @@ import CmtItem from "../modules/comment/CmtItem";
 import { v4 } from "uuid";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
 import useQueryCollection from "../hooks/useQueryCollection";
+import ButtonBack from "../components/button/ButtonBack";
 /* ====================================================== */
+
+const PostIconStyles = "w-[80px] h-[80px]";
 
 const TabMeta = [`Comments`, "Creator's videos"];
 const PostDetailPage = () => {
@@ -49,7 +51,7 @@ const PostDetailPage = () => {
   return (
     <section className="flex flex-row h-screen">
       {/* Video container */}
-      <div className="relative w-full flex items-center h-screen justify-center max-w-[992px] mx-auto overflow-hidden bg-black">
+      <div className="relative w-full flex items-center h-screen justify-center xl:max-w-[992px] mx-auto overflow-hidden bg-black">
         {isLoading && (
           <Skeleton className="z-20 w-[422px]  object-contain h-full rounded-sm"></Skeleton>
         )}
@@ -59,18 +61,27 @@ const PostDetailPage = () => {
             loop
             autoPlay
             src={postData?.video}
-            className="z-20 object-contain h-full rounded-sm"
+            className="z-20 object-cover w-full h-full rounded-sm xl:w-fit xl:object-contain"
           />
         )}
-        <div className="absolute inset-0 bg-black bg-opacity-50 blur-xl">
+        <div className="absolute inset-0 hidden bg-black bg-opacity-50 xl:block blur-xl">
           {!isLoading && postData && (
             <video muted src={postData?.video} className="img-cover" />
           )}
         </div>
+
+        {/* Post action for mobile devices */}
+        <section className="absolute z-30 block top-2/4 xl:hidden -translate-y-2/4 -translate-x-2/4 right-2">
+          <section className="flex flex-col gap-10 mt-5">
+            <PostLike data={postData} className={PostIconStyles} size={35} />
+            <PostCmt data={postData} className={PostIconStyles} size={35} />
+            <PostSave data={postData} className={PostIconStyles} size={30} />
+          </section>
+        </section>
       </div>
 
       {/* Content */}
-      <section className="flex-1 overflow-y-auto">
+      <section className="flex-1 hidden overflow-y-auto xl:block">
         <div className="p-5">
           <PostInfo data={postData} />
 
@@ -179,13 +190,7 @@ const PostDetailPage = () => {
         )}
       </section>
 
-      {/* Back */}
-      <Link
-        to="/"
-        className="fixed flex items-center rounded-full justify-center top-6 left-8 w-[40px] h-[40px] bg-[#3f3f3f] hover:bg-Crimson text-white cursor-pointer"
-      >
-        <BiArrowBack size={22} />
-      </Link>
+      <ButtonBack className="z-50" />
     </section>
   );
 };

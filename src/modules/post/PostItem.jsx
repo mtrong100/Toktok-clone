@@ -9,9 +9,9 @@ import PostLike from "./PostLike";
 import PostCmt from "./PostCmt";
 import ButtonFollow from "../../components/button/ButtonFollow";
 import { useSelector } from "react-redux";
-import { formatDateTime } from "../../utils/reuse-function";
-import { toast } from "react-toastify";
 import { ToastConfig } from "../../constants/constants";
+import { toast } from "react-toastify";
+import { formatDateTime } from "../../utils/reuse-function";
 /* ====================================================== */
 
 const PostItem = ({ data }) => {

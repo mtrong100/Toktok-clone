@@ -1,9 +1,4 @@
-import {
-  AiFillHome,
-  AiFillVideoCamera,
-  AiOutlineUnorderedList,
-  AiOutlineUpload,
-} from "react-icons/ai";
+import { AiFillHome, AiOutlineUnorderedList } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { MdExplore, MdOutlineUploadFile } from "react-icons/md";
 

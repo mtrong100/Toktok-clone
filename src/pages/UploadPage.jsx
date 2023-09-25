@@ -22,6 +22,7 @@ import {
 import slugify from "slugify";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import ButtonBack from "../components/button/ButtonBack";
 /* ====================================================== */
 
 const UploadPage = () => {
@@ -197,6 +198,8 @@ const UploadPage = () => {
           </section>
         </form>
       </div>
+
+      <ButtonBack className="flex lg:hidden top-[80px]" />
     </section>
   );
 };

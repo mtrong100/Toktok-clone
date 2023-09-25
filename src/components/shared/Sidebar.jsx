@@ -5,6 +5,7 @@ import { v4 } from "uuid";
 import { SidebarLinks } from "../../constants/constants";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { MdOutlineUploadFile } from "react-icons/md";
 /* ====================================================== */
 
 const Sidebar = () => {
@@ -30,6 +31,19 @@ const Sidebar = () => {
             </NavLink>
           )
         )}
+        <NavLink
+          to="/creator/upload"
+          className={({ isActive }) =>
+            `${
+              isActive ? "text-Crimson" : "text-LightGrey"
+            }  px-5 items-center cursor-pointer font-semibold hover:bg-CharcoalGray transition-all rounded-sm gap-4 h-[48px] text-lg md:flex lg:hidden`
+          }
+        >
+          <span className="text-2xl">
+            <MdOutlineUploadFile />
+          </span>
+          <p>Upload</p>
+        </NavLink>
       </ul>
       <div className="mb-3 h-[1px] w-full bg-CharcoalGray"></div>
       <section>

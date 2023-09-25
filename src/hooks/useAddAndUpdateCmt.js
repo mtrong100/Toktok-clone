@@ -9,19 +9,27 @@ import { useEffect, useState } from "react";
 import { db } from "../utils/firebase-app";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsUpdate } from "../redux/features/postSlice";
+import { toast } from "react-toastify";
+import { ToastConfig } from "../constants/constants";
 /* ====================================================== */
 
 export default function useAddAndUpdateCmt(value, setValue, postId, userId) {
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isUpdate, commentData } = useSelector((state) => state.post);
 
   /* Submit comments */
   const handleSubmit = () => {
-    if (isUpdate) {
-      handleUpdateCmt();
+    if (!currentUser?.email) {
+      toast.info("Please sign in!", ToastConfig);
+      return;
     } else {
-      handleAddCmt();
+      if (isUpdate) {
+        handleUpdateCmt();
+      } else {
+        handleAddCmt();
+      }
     }
   };
 

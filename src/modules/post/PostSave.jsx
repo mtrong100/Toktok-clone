@@ -31,7 +31,9 @@ const PostSave = ({
       >
         <BsFillBookmarkFill size={size} />
       </span>
-      <small className="text-sm font-medium">{amount.length || "0"}</small>
+      <small className="text-4xl font-semibold xl:font-medium xl:text-sm">
+        {amount.length || "0"}
+      </small>
     </div>
   );
 };
