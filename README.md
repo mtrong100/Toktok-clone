@@ -1,8 +1,15 @@
-# React + Vite
+# Toktok-clone
+- A clone version of tiktok website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Tech using 
+- React, Tailwind CSS, Firebase
 
-Currently, two official plugins are available:
+# Features
+- CRUD post, user, comment
+- Dashoard manage videos upload
+- OAuth login with google and github
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Preview
+- [Click here](https://toktok-clone-mu.vercel.app/)
+
+![image](https://github.com/mtrong100/Toktok-clone/assets/94778246/4f4f31d5-f540-47e1-ba5e-98abb74e6307)
